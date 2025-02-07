@@ -203,7 +203,7 @@ void StutterBuffer::applyFade()
 
 float StutterBuffer::getCrossfadeSample(int chan, int index, float sample)
 {
-	int crossFadeIdx = sample - (maxStutterIndex - numFadeSamples);
+	int crossFadeIdx = index - (maxStutterIndex - numFadeSamples);
 	return getInterpolatedSample(chan, crossFadeIdx);
 }
 
@@ -212,7 +212,6 @@ void StutterBuffer::setStutterDurationInSamples(int numSamples)
 	if (!juce::approximatelyEqual(int(maxStutterIndex), numSamples)) {
 		targetDuration = numSamples;
 		//fade out
-		/*
 		for (int chan = stutterBuffer.getNumChannels(); --chan >= 0;) {
 			auto* data = stutterBuffer.getWritePointer(chan);
 			for (int i = 0; i < numFadeSamples; ++i)
@@ -220,8 +219,7 @@ void StutterBuffer::setStutterDurationInSamples(int numSamples)
 				const int idx = targetDuration - numFadeSamples + i;
 				data[idx] *= 1.0f - static_cast<float>(i) / numFadeSamples;
 			}
-		}*/
-		
+		}
 		return;
 	}
 	targetDuration = numSamples;
